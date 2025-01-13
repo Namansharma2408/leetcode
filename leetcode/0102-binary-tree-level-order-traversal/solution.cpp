@@ -2,25 +2,22 @@ class Solution {
 public:
     int levels(TreeNode* root){
         if( root == NULL) return 0;
-        return 1+ max(levels(root->left),levels(root->right));
+        return 1 + max(levels(root->left),levels(root->right));
     }
-    void displayPreNth(vector<int> &w,TreeNode* root,int level,int nth){
-        if( root == NULL) return ;
-        if(level == nth){ 
-            w.push_back(root->val);
-            return;
-        }
-        displayPreNth(w,root->left,level+1,nth);
-        displayPreNth(w,root->right,level+1,nth);
-    }   
+    void lOrder(TreeNode* root,vector<vector<int>> &ans , int level){
+        if( root == NULL) return;
+        ans[level].push_back(root->val);
+        lOrder(root->left,ans,level+1);
+        lOrder(root->right,ans,level+1);
+    }
     vector<vector<int>> levelOrder(TreeNode* root) {
         int n = levels(root);
-        vector<vector<int>> v;
-        for( int i = 1 ; i <= n ; i++){
-            vector<int> w;
-            displayPreNth(w,root,1,i);
-            v.push_back(w);
+        vector<vector<int>> ans;
+        for( int i = 0 ; i < n ; i++){
+            vector<int> v;
+            ans.push_back(v);
         }
-        return v;
+        lOrder(root,ans,0);
+        return ans;
     }
 };
