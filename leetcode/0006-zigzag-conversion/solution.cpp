@@ -1,24 +1,23 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        string str;
-        if( numRows ==1) return s;
+        if( numRows == 1) return s;
+        string str = "";
         int n = s.size();
-        int k = (n - (n%(numRows - 1)) - 1)/(numRows-1);
-        for( int i = 0; i <= k/2 +1 ; i++){
-        if(i*(2*numRows - 2) < n )   str.push_back(s[i*(2*numRows - 2)]);
-        }
-        for( int t = 1 ; t < (numRows-1) ; t++){
-            for( int i = 0 ; i <= k/2 +1 ; i++){
-            if(i*(2*numRows - 2) +t < n )    str.push_back(s[i*(2*numRows - 2) +t]);
-            if((i+1)*(2*numRows - 2) - t < n )    str.push_back(s[(i+1)*(2*numRows - 2) - t]);
+        // For the 1st row
+        for(int i = 0 ; i < n ; i += 2*(numRows-1)) str.push_back(s[i]);
+        
+        // For all other rows other than last
+        for( int i = 1 ; i <= numRows-2 ; i++){
+            for( int j = 0 ; j < 2*n ; j += 2*(numRows-1)){
+                if(j-i >= 0 && j-i < n)str.push_back(s[j-i]);
+                if(j+i < n)str.push_back(s[j+i]);
             }
         }
 
+        // For last row 
+        for( int i = numRows-1 ; i < n ; i += 2*(numRows-1)) str.push_back(s[i]);
 
-        for( int i = 0 ; i <= (k+1)/2 ; i++){
-        if(i*(2*numRows - 2) + numRows - 1 < n )    str.push_back(s[i*(2*numRows - 2) + numRows - 1]);
-        }
         return str;
     }
 };
