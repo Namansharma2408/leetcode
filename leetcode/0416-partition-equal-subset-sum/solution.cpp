@@ -11,8 +11,9 @@ public:
         for( int i = 1 ; i < n ; i++){
             unordered_set<int> temp;
             for( int j : s) {
-                if( j + nums[i] == sum/2) return true;
-                temp.insert(j + nums[i]);
+                int k = j + nums[i];
+                if( k == sum/2) return true;
+                if( k < sum/2 )temp.insert(k);
             }
             s.insert(temp.begin(),temp.end());
         }
