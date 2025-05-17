@@ -1,15 +1,13 @@
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> v;
-        for( int i = 0 ; i < numRows ; i++){
-            vector<int> a;
-            for( int j = 0; j<=i ; j++){
-                if( j == 0) a.push_back(1);
-                else if ( j<i ) a.push_back(v[i-1][j]+v[i-1][j-1]);
-                else a.push_back(1);
+        vector<vector<int>> v(numRows,vector<int> (1,1));
+        for( int i = 1 ; i < numRows ; i++){
+            for( int j = 1 ; j <= i ; j++){
+                int num;
+                i != j ? num = (v[i][j-1] *(i-j+1))/(j) : num = 1;
+                v[i].push_back(num);
             }
-            v.push_back(a);
         }
         return v;
     }
