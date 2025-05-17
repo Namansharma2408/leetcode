@@ -1,50 +1,32 @@
 class Solution {
 public:
-    void remove(vector<vector<int>> &vec){
-        
-        for (auto &innerVec : vec) { 
-            sort(innerVec.begin(), innerVec.end()); 
-        }            
-        sort(vec.begin(), vec.end()); 
-        auto last = unique(vec.begin(), vec.end()); 
-        vec.erase(last, vec.end());
+    vector<int> find(vector<int> &nums,int i,int j){
+        int n = nums.size();
+        int lo = j+1;
+        int hi = n-1;
+        vector<int> v;
+        int num = -nums[i]-nums[j];
+        while( lo <= hi){
+            int mid = (lo+hi)/2;
+            if(nums[mid] == num){
+                v = {nums[i],nums[j],nums[mid]};
+                break;
+            }else if(nums[mid] < num) lo = mid + 1;
+            else hi = mid - 1;
+        }
+        return v;
     }
     vector<vector<int>> threeSum(vector<int>& nums) {
         sort(nums.begin(),nums.end());
-        vector<vector<int>> ans;
-        vector<int> v(3);
         int n = nums.size();
-        for(int i = 0 ; i < n-2 ; i++){
-            if( nums[i] == 0){
-                if( nums[i+1] == 0 && nums[i+2] == 0){
-                    v[0] = 0,v[1] = 0,v[2] = 0;
-                    ans.push_back(v);
-                }
+        set<vector<int>> v;
+        for( int i = 0 ; i < n - 2 ; i++){
+            for( int j = i+1 ; j < n - 1 ; j++){
+                vector<int> temp = find(nums,i,j);
+                if(temp.size() == 3) v.insert(temp);
             }
         }
-        for( int i = 0; nums[i] < 0 && i < n ; i++){
-            for( int j = n-1 ; nums[j] > 0 && j >= 0 ; j--){                
-                    int k = - nums[j] - nums[i];
-                    int hi = j-1;
-                    int lo = i+1;
-                    int mid = 0;
-                    while(lo <= hi ){
-                        mid = (lo + hi)/2;
-                        if( nums[mid] == k){
-                            v[0] = nums[i];
-                            v[1] = nums[mid];
-                            v[2] = nums[j];
-                            ans.push_back(v);
-                            break;
-                        } 
-                        else if(nums[mid] < k) lo = mid+1;
-                        else hi = mid-1;
-                    }
-                
-            }
-        }
-        remove(ans);
-        return ans;
-        
+        vector<vector<int>> result(v.begin(),v.end());
+        return result;
     }
 };
