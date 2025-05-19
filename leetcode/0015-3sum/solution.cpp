@@ -1,32 +1,25 @@
 class Solution {
 public:
-    vector<int> find(vector<int> &nums,int i,int j){
-        int n = nums.size();
-        int lo = j+1;
-        int hi = n-1;
-        vector<int> v;
-        int num = -nums[i]-nums[j];
-        while( lo <= hi){
-            int mid = (lo+hi)/2;
-            if(nums[mid] == num){
-                v = {nums[i],nums[j],nums[mid]};
-                break;
-            }else if(nums[mid] < num) lo = mid + 1;
-            else hi = mid - 1;
-        }
-        return v;
-    }
     vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
         int n = nums.size();
-        set<vector<int>> v;
-        for( int i = 0 ; i < n - 2 ; i++){
-            for( int j = i+1 ; j < n - 1 ; j++){
-                vector<int> temp = find(nums,i,j);
-                if(temp.size() == 3) v.insert(temp);
+        sort(nums.begin(),nums.end());
+        if( nums[0] > 0 || nums[n-1] < 0) return {};
+        set<vector<int>> result;
+        for( int i = 0 ; i < n-2 ; i++){
+            if( nums[i] > 0 ) break;
+            if( i != 0 && nums[i] == nums[i-1]) continue;
+            int j = i+1,k = n-1;
+            while( j < k){
+                int sum = nums[i]+nums[j]+nums[k];
+                if( sum > 0) k--;
+                else if( sum < 0) j++;
+                else {
+                    result.insert({nums[i],nums[j],nums[k]});
+                    j++,k--;
+                }
             }
         }
-        vector<vector<int>> result(v.begin(),v.end());
-        return result;
+        vector<vector<int>> ans(result.begin(),result.end());
+        return ans;
     }
 };
