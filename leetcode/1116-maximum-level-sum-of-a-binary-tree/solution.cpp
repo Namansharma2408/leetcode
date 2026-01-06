@@ -1,27 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    void sum(TreeNode* root,int level,vector<int> &levelSum){
-        if( root == NULL) return;
-        levelSum[level-1] += root->val;
-        sum(root->left,level+1,levelSum);
-        sum(root->right,level+1,levelSum);
-    }
-    int levels(TreeNode* root){
-        if( root == NULL) return 0;
-        else return 1 + max(levels(root->left),levels(root->right));
+    unordered_map<int,int> mp;
+    void levelSum(TreeNode* root, int &currLevel){
+        if( root == NULL ) return;
+        mp[currLevel] += root->val;
+        currLevel += 1;
+        levelSum(root->left,currLevel);
+        levelSum(root->right,currLevel);
+        currLevel -= 1;
+
     }
     int maxLevelSum(TreeNode* root) {
-        int n = levels(root);
-        vector<int> levelSum(n);
-        sum(root,1,levelSum);
-        int maxi = levelSum[0];
-        int idx;
-        for( int i = 1 ; i < n ; i++) {
-            if( maxi < levelSum[i]){
-                maxi = levelSum[i];
-                idx = i;
-            }
+        int currLevel = 1;
+        levelSum(root,currLevel);
+        int maxi = 1;
+        for( auto p : mp ){
+            if( p.second >= mp[maxi] ) maxi = p.first;
         }
-        return idx+1;
+        return maxi;
     }
 };
