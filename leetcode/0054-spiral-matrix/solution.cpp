@@ -3,39 +3,31 @@ public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
-        int Hs = 0 , He = n-1 , Vs = 0 , Ve = m-1 ;
-		int count = 0;
-        vector<int> arr;
-		while(count <= m*n){
-			for( int i = Hs ; i <= He ; i++ ){			
-			if( count >= m*n )break;
-			arr.push_back(matrix[Vs][i]);
-            count++;
-			}
-			if( count >= m*n )break;
-			Vs++;
-			for( int i = Vs ; i <= Ve ; i++ ){			
-			if( count >= m*n )break;
-			arr.push_back(matrix[i][He]);
-            count++;
-			}
-			if( count >= m*n )break;
-			He--;
-			for( int i = He ; i >= Hs  ; i-- ){		
-			if( count >= m*n )break;
-			arr.push_back(matrix[Ve][i]);
-            count++;
-			}
-			if( count >= m*n )break;
-			Ve--;
-			for( int i = Ve ; i >= Vs ; i-- ){
-			if( count >= m*n )break;
-			arr.push_back(matrix[i][Hs]);
-            count++;
-			}
-			if( count >= m*n )break;
-			Hs++;	
-		} 
-        return arr;
+        int rs = 0, re = m-1, cs = 0, ce = n-1;
+        int count = 0;
+        vector<int> ans;
+        while( true ){
+            for( int i = cs ; i <= ce ; i++ ){
+                ans.push_back(matrix[rs][i]);
+                if( ans.size() == m*n) return ans;
+            }
+            rs++;
+            for( int i = rs ; i <= re ; i++ ){
+                ans.push_back(matrix[i][ce]);
+                if( ans.size() == m*n) return ans;
+            }
+            ce--;
+            for( int i = ce ; i >= cs ; i-- ){
+                ans.push_back(matrix[re][i]);
+                if( ans.size() == m*n) return ans;
+            }
+            re--;
+            for( int i = re ; i >= rs ; i-- ){
+                ans.push_back(matrix[i][cs]);
+                if( ans.size() == m*n) return ans;
+            }
+            cs++;
+        }
+        return ans;
     }
 };
