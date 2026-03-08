@@ -1,23 +1,24 @@
 class Solution {
 public:
     bool detectCapitalUse(string word) {
-        if(word.size() == 1) return true;
-        if( 97 <= word[0] && word[0] <= 122){
-            for( char ch : word) if( 97 > ch || ch > 122) return false;
-            return true;
-        }
-        if( 65 <= word[0] && word[0] <= 90 ){
-            if(word.size() > 1 && 65 <= word[1] && word[1] <= 90){
-                for( char ch : word) if( 65 > ch || ch > 90) return false;
-                return true;
-            }
-            if(word.size() > 1 && 97 <= word[1] && word[1] <= 122){
-                int n = word.size();
-                for( int i = 1 ; i < n ; i++) if( 97 > word[i] || word[i] > 122) return false;
-                return true;
+        int n = word.size();
+        if( word[0] >= 'a' && word[0] <= 'z' ){
+            for( int i = 1 ; i < n ; i++ ){
+                if( word[i] < 'a' || word[i] > 'z' ) return false;
             }
         }
-        return false;
-        
+        if( word[0] >= 'A' && word[0] <= 'Z' ){
+            if( word[1] >= 'A' && word[1] <= 'Z' ){
+                for( int i = 2 ; i < n ; i++ ){
+                    if( word[i] < 'A' || word[i] > 'Z' ) return false;
+                }
+            }
+            if( word[1] >= 'a' && word[1] <= 'z' ){
+                for( int i = 2 ; i < n ; i++ ){
+                    if( word[i] < 'a' || word[i] > 'z' ) return false;
+                }
+            }
+        }
+        return true;
     }
 };
