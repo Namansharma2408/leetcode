@@ -1,11 +1,11 @@
 class Solution {
 public:
     int findComplement(int num) {
-        long i = 1;
-        while( true){
-            if( num < i) return (i - num - 1);
-            i *= 2;
+        int n = 1;
+        while( n < num ){
+            n *= 2;
+            n += 1;
         }
-        return 0;
+        return n - num;
     }
 };
