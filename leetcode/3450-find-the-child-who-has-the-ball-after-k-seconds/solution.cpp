@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int numberOfChild(int n, int k) {
+        k %= 2*(n-1);
+        if( k < n ) return k;
+        else return 2*n - k - 2;
+        return 0;
+    }
+};
