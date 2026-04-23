@@ -9,11 +9,12 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - name: LeetCode Sync
-        uses: joshcai/leetcode-sync@v1.6
+        uses: joshcai/leetcode-sync@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
-          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }} 
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
           destination-folder: leetcode
